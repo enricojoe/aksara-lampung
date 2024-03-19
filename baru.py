@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, ImageTk
 import customtkinter
-import tensorflow as tf
-from tensorflow import keras
 from glob import glob
 from sklearn.preprocessing import LabelEncoder
 from keras.optimizers import Adam
