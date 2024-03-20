@@ -2,11 +2,10 @@ import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 from tkinter import *
-from tkinter import filedialog, ttk
+from tkinter import filedialog
 import cv2 as cv
-import matplotlib.pyplot as plt
 import numpy as np
-from PIL import Image, ImageTk
+from PIL import Image
 import customtkinter
 from glob import glob
 from sklearn.preprocessing import LabelEncoder
@@ -89,7 +88,7 @@ class WindowApp:
 class KonversiAksara:
   def __init__(self) -> None:
     self.keras_model = self.model()
-    self.keras_model.load_weights('./konversi-aksara/aksara-lampung/model_checkpoint/cp.weights.h5')
+    self.keras_model.load_weights('./model_checkpoint/cp.weights.h5')
   
   def model(self) -> None:
     cnn_model = Sequential([
@@ -152,14 +151,14 @@ class KonversiAksara:
     kernel = cv.getStructuringElement(cv.MORPH_RECT, (5,5))
     morph_open = cv.morphologyEx(thresh, cv.MORPH_OPEN, kernel)
 
-    kernel2 = cv.getStructuringElement(cv.MORPH_RECT, (10,7))
+    kernel2 = cv.getStructuringElement(cv.MORPH_RECT, (10,10))
     dilation = cv.dilate(morph_open, kernel2, iterations=5)
 
     contours, _ = cv.findContours(dilation, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-    contours = sorted(contours, key=lambda ctr: cv.boundingRect(ctr)[1])
+    contours = sorted(contours, key=lambda ctr: cv.boundingRect(ctr)[0])
 
     list_kata = []
-    for contour in contours[::-1]:
+    for contour in contours:
         x, y, w, h = cv.boundingRect(contour)
         crop_img = thresh[y:y + h, x:x + w]
         list_kata.append(crop_img)
