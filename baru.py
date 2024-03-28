@@ -15,7 +15,7 @@ from keras.layers import Conv2D, MaxPooling2D, Input, Flatten, Dropout, Dense
 
 from model import KonversiAksaraModel
 
-IMAGE_SIZE = 50
+IMAGE_SIZE = 40
 
 class WindowApp:
   def __init__(self, root, w, h) -> None:
